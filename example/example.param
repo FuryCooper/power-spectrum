@@ -1,0 +1,8 @@
+output_dir	/ds/rui/workspace/powerspectrum/
+output_root	snapshot9
+input_dir	/ds/rui/workspace/gadget2/mycase/
+file_root	gadgetsnapshot9
+
+num_files	15
+
+folding_number	3
