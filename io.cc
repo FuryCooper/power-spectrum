@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include <string>
 #include <stdio.h>
+#include <math.h>
 #include <omp.h>
 
 #include "memory.h"
@@ -24,7 +24,7 @@ void read_param()
 	filename = fopen(param_path, "r");
 	if (filename == NULL)
 	{
-		printf("Error: Fail to load parameter file %s.\n", filename);
+		printf("Error: Fail to load parameter file %s.\n", param_path);
 		exit(1);
 	}
 
@@ -84,7 +84,7 @@ void read_param()
 		else
 		{
 		
-			fprintf(stdout, "Error in file %s: Tag '%s' not allowed or multiple defined.\n", filename, buf1);
+			fprintf(stdout, "Error in file %s: Tag '%s' not allowed or multiple defined.\n", param_path, buf1);
 			exit(1);
 		}
 	}
@@ -103,7 +103,7 @@ void load_snapshot(int rep)
 	char filename[MAX_FILENAME_LENGTH];
 	int NLocalParticle = 0;
 	GadgetHeader LocalHeader;
-	File* SnapShotFile;
+	FILE* SnapShotFile;
 
 	/* Assigning Thread & starting loading */
 	while (SnapShotNo <= All.NTotalSnapShot)
@@ -119,12 +119,12 @@ void load_snapshot(int rep)
 		}
 		else
 		{
-			sprintf(filename, input_root);
+			sprintf(filename, "%s%s", All.input_dir, All.file_root);
 		}
 		SnapShotFile = fopen(filename, "rb");
 		if (SnapShotFile == NULL)
 		{
-			printf("Thread %d: Error: fail to open the Snapshot No.%d", ThisTask, SnapShotNo;
+			printf("Thread %d: Error: fail to open the Snapshot No.%d", ThisTask, SnapShotNo);
 			exit(1);
 		}
 
@@ -138,7 +138,7 @@ void load_snapshot(int rep)
 			NLocalParticle = 0;
 			for (int i = 0; i < 6; i++)
 			{
-				NLocalParticle += LocalHeader.NPartTotal[i];
+				NLocalParticle += LocalHeader.NPart[i];
 			}
 			ParticleNo[SnapShotNo] = NLocalParticle;
 		}
@@ -165,6 +165,7 @@ void load_snapshot(int rep)
 			}
 			fread(&BlockSize, sizeof(BlockSize), 1, SnapShotFile);
 
+			int NTotalMass;
 			for (int i = 0; i < 6; i++)
 			{
 				NTotalMass += LocalHeader.Mass[i];
@@ -179,7 +180,7 @@ void load_snapshot(int rep)
 				for (int j = 0; j < LocalHeader.NPart[i]; j++)
 				{
 					P[Temp].Type = i;
-					if (LocalHeader.mass[i] == 0)
+					if (LocalHeader.Mass[i] == 0)
 					{
 						fread(&P[Temp].Mass, sizeof(float), 1, SnapShotFile);
 					}
@@ -274,7 +275,7 @@ void output()
 		exit(1);
 	}
 
-	printf(OutFile, "k[h/Mpc] Pk[Mpc^3/h^3] k_number Pk_error\n");
+	fprintf(OutFile, "k[h/Mpc] Pk[Mpc^3/h^3] k_number Pk_error\n");
 	for (int i = 0; i < PkBinNumber; i++)
 	{
 		if (PkValues[i].kNumber > 0)

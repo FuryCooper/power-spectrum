@@ -1,4 +1,4 @@
-#include <gsl/gsl_rng.h>
+#include <fftw.h>
 
 #define NBINS 28
 #define KBIN_INTERVERL 1.15
@@ -24,6 +24,7 @@ struct GadgetHeader
 	int NPartTotal;
 	int NumFiles;
 	double BoxSize;
+	int FlagCooling;
 	double Omega0;
 	double HubbleParam;
 	char Fill[256 - 6 * 4 - 6 * 8 - 2 * 8 - 2 * 4 - 6 * 4 - 2 * 4 - 4 * 8]; //fills to 256 Bytes
@@ -44,7 +45,6 @@ struct ParticleData
 	float Mass;
 	int ID;
 	int Type;
-	int FlagCooling;
 
 	float Rho, U, Temp, Ne;
 };
@@ -61,6 +61,7 @@ struct Parameter
 };
 
 extern int ThreadNumber;
+extern char param_path[MAX_FILENAME_LENGTH];
 
 extern double BoxSizeInPhysicalUnits;
 extern double BoxSizeInInternalUnits, HalfBoxSizeInInternalUnits;

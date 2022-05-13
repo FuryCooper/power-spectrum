@@ -1,6 +1,4 @@
-#include <gsl/gsl_rng.h>
 #include <fftw3.h>
-#include <string>
 
 #include "vars.h"
 

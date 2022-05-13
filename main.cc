@@ -5,7 +5,6 @@
 #include <math.h>
 #include <fftw3.h>
 #include <time.h>
-#include <string>
 #include <mpi.h>
 
 #include "vars.h"
