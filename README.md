@@ -5,7 +5,8 @@ git clone https://github.com/FuryCooper/power-spectrum.git
 ```
 
 ### Installation
-Before doing "make", you might need to modify Makefile to include your own fftw library.
+Before doing "make", you might need to modify Makefile to include your own fftw library. Also kindly remind you
+that fftw3 might be not supported, so fftw2 library is recommended.
 
 ```
 make
