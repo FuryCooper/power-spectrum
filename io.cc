@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include <omp.h>
 
 #include "memory.h"
@@ -52,7 +53,7 @@ void read_param()
 	while (!feof(filename))
 	{
 		buf[0] = 0;
-		ret = fgets(buf, 200, fd);
+		ret = fgets(buf, 200, filename);
 		if (scanf(buf, "%s%s%s", buf1, buf2, buf3) < 2)
 			continue;
 		if (buf1[0] == '%')
