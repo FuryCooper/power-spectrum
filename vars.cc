@@ -1,4 +1,4 @@
-#include <fftw3.h>
+#include <fftw.h>
 
 #include "vars.h"
 

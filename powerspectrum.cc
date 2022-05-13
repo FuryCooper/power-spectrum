@@ -2,6 +2,7 @@
 #include <string>
 #include <stdio.h>
 #include <omp.h>
+#include <math.h>
 
 #include "vars.h"
 #include "density.h"

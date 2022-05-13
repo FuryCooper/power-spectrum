@@ -2,8 +2,9 @@
 * rewritten by Rui. 
 */
 
+#include <string.h>
 #include <math.h>
-#include <fftw3.h>
+#include <fftw.h>
 #include <time.h>
 #include <omp.h>
 
@@ -43,7 +44,7 @@ int main(int argc, char** argv) {
 	output();
 
 	FinishTime = clock();
-	printf("CLOCKS_PER_SEC = %d\n", CLOCKS_PER_SEC);
+	printf("CLOCKS_PER_SEC = %ld\n", CLOCKS_PER_SEC);
 	printf("Duration = %f\n", (double)((FinishTime - StartTime) / CLOCKS_PER_SEC));
 
 }

@@ -6,7 +6,7 @@
 
 void allocate_memory_for_fftwArray()
 {
-	fftwArray = (fftw_complex*)malloc(TotalMeshNumber * sizeof(ffww_complex));
+	fftwArray = (fftw_complex*)malloc(TotalMeshNumber * sizeof(fftw_complex));
 	if (fftwArray == NULL)
 	{
 		printf("Error: fail to allocate memory for fftw_complex fftwArray.\n");
