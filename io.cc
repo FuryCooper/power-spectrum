@@ -73,10 +73,10 @@ void read_param()
 				*((double*)addr[j]) = atof(buf2);
 				break;
 			case STRING:
-				strcpy(addr[j], buf2);
+				strcpy((char*)addr[j], buf2);
 				break;
 			case INT:
-				*((double*)addr[j]) = atoi(buf2);
+				*((int*)addr[j]) = atoi(buf2);
 				break;
 			default:
 				break;
