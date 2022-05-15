@@ -47,19 +47,19 @@ void computing(double TotalMassInBox)
 		zIndex = P[ParticleNumber].Pos[2];
 
 		xIndexNext = xIndex + 1;
-		if (xIndex >= fftwMeshNumber)
+		if (xIndexNext >= fftwMeshNumber)
 		{
 			xIndexNext -= fftwMeshNumber;
 		}
 
 		yIndexNext = yIndex + 1;
-		if (yIndex >= fftwMeshNumber)
+		if (yIndexNext >= fftwMeshNumber)
 		{
 			yIndexNext -= fftwMeshNumber;
 		}
 
 		zIndexNext = zIndex + 1;
-		if (zIndex >= fftwMeshNumber)
+		if (zIndexNext >= fftwMeshNumber)
 		{
 			zIndexNext -= fftwMeshNumber;
 		}
