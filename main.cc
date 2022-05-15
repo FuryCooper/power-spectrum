@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 	if (argc < 3)
 	{
 		printf("Error: arguments missing.\n");
-		printf("Specify the node number and the parameter file in the command line, e.g. ./powerspectrum.param <parameterfile>\n");
+		printf("Specify the node number and the parameter file in the command line, e.g. ./powerspectrum.param <threadnumber> <parameterfile>\n");
 		exit(1);
 	}
 	else

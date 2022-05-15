@@ -22,6 +22,7 @@ void read_param()
 	void* addr[MAXTAGS];
 	char* ret, tag[MAXTAGS][50];
 
+	printf("Starting reading parameter file.\n");
 	filename = fopen(param_path, "r");
 	if (filename == NULL)
 	{
@@ -49,6 +50,10 @@ void read_param()
 	strcpy(tag[nt], "output_root");
 	addr[nt] = All.output_root;
 	id[nt++] = STRING;
+
+	strcpy(tag[nt], "folding_number");
+	addr[nt] = All.FoldingNumber;
+	id[nt++] = int;
 
 	while (!feof(filename))
 	{
@@ -90,6 +95,7 @@ void read_param()
 		}
 	}
 	fclose(filename);
+	printf("Done.\n");
 }
 
 void load_snapshot(int rep)

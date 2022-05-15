@@ -18,7 +18,6 @@ int* ParticleNo;
 int NTotalParticle;
 int TotalMeshNumber;
 int PkBinNumber, PkBinNumberLinear, PkBinNumberLog;
-int FoldingNumber;
 
 /* fourier transformation */
 int kMin, kMax, kMinThisFolding, kMaxThisFolding;

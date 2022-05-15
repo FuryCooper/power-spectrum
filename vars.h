@@ -58,6 +58,7 @@ struct Parameter
 	char output_root[MAX_FILENAME_LENGTH];
 	char nu_txt[MAX_FILENAME_LENGTH];
 	double fnu;
+	int FoldingNumber;
 };
 
 extern int ThreadNumber;
@@ -71,7 +72,6 @@ extern int fftwMeshNumber;
 extern int* ParticleNo;
 extern int NTotalParticle;
 extern int TotalMeshNumber;
-extern int FoldingNumber;
 extern int PkBinNumber, PkBinNumberLinear, PkBinNumberLog;
 extern int kMin, kMax, kMinThisFolding, kMaxThisFolding;
 extern double DeltaLinearK, DeltaLogK;

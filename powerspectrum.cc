@@ -11,7 +11,7 @@
 void powerspectrum()
 {
 	printf("Starting calculating power spectrum...\n");
-	for (int FoldingCount = 0; FoldingCount < FoldingNumber; FoldingCount++)
+	for (int FoldingCount = 0; FoldingCount < All.FoldingNumber; FoldingCount++)
 	{
 		if (FoldingCount)
 		{
