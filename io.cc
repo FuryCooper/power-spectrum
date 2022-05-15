@@ -16,7 +16,7 @@ void read_param()
 #define MAXTAGS 30
 
 	FILE* filename;
-	char buf[200], buf1[200], buf2[200], buf3[200];
+	char buf[MAX_FILENAME_LENGTH], buf1[MAX_FILENAME_LENGTH], buf2[MAX_FILENAME_LENGTH], buf3[MAX_FILENAME_LENGTH];
 	int i, j, nt;
 	int id[MAXTAGS];
 	void* addr[MAXTAGS];
@@ -58,8 +58,8 @@ void read_param()
 	while (!feof(filename))
 	{
 		buf[0] = 0;
-		ret = fgets(buf, 200, filename);
-		if (scanf(buf, "%s%s%s", buf1, buf2, buf3) < 2)
+		ret = fgets(buf, MAX_FILENAME_LENGTH, filename);
+		if (sscanf(buf, "%s%s%s", buf1, buf2, buf3) < 2)
 			continue;
 		if (buf1[0] == '%')
 			continue;
