@@ -111,12 +111,12 @@ void load_snapshot(int rep)
 	{
 		if (rep == 1)
 		{
-			printf("Thread %d: Starting loading Snapshot No.%d.\n", ThisTask, SnapShotNo);
+			printf("Thread %d: Starting loading Snapshot No.%d.\n", ThisTask, SnapShotNo - 1);
 		}
 
 		if (All.NTotalSnapShot > 1)
 		{
-			sprintf(filename, "%s%s.%d", All.input_dir, All.file_root, SnapShotNo);
+			sprintf(filename, "%s%s.%d", All.input_dir, All.file_root, SnapShotNo - 1);
 		}
 		else
 		{
@@ -125,7 +125,7 @@ void load_snapshot(int rep)
 		SnapShotFile = fopen(filename, "rb");
 		if (SnapShotFile == NULL)
 		{
-			printf("Thread %d: Error: fail to open the Snapshot No.%d", ThisTask, SnapShotNo);
+			printf("Thread %d: Error: fail to open the Snapshot No.%d", ThisTask, SnapShotNo - 1);
 			exit(1);
 		}
 
@@ -242,7 +242,7 @@ void load_snapshot(int rep)
 
 				fclose(SnapShotFile);
 			}
-			printf("Thread %d: Loading Snapshot No.%d : Done.\n", ThisTask, SnapShotNo);
+			printf("Thread %d: Loading Snapshot No.%d : Done.\n", ThisTask, SnapShotNo - 1);
 		}
 
 		/* determine if need to keep loading */
