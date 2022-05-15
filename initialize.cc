@@ -41,40 +41,8 @@ void initialize()
 
 void set_units()
 {
-	int MeanParticleNumber;
-	int ThisNumber;
-	int* ThisIndices;
 	int ThisTask = omp_get_thread_num();
-
-	MeanParticleNumber = NTotalParticle / ThreadNumber;
-	if (ThisTask == ThreadNumber - 1)
-	{
-		ThisNumber = NTotalParticle - MeanParticleNumber * (ThreadNumber - 1);
-	}
-	else
-	{
-		ThisNumber = MeanParticleNumber;
-	}
-
-	ThisIndices = (int*)malloc(sizeof(int) * ThisNumber);
-	if (ThisIndices == NULL)
-	{
-		printf("Thread %d : Error: fail to allocate memory for ThisIndices.\n", ThisTask);
-		exit(1);
-	}
-	
-	/* assign task indices for each thread */
-	for (int i = 0; i < MeanParticleNumber; i++)
-	{
-		ThisIndices[i] = ThisTask + i * ThreadNumber;
-	}
-	if (ThisTask == ThreadNumber - 1)
-	{
-		for (int i = MeanParticleNumber; i < ThisNumber; i++)
-		{
-			ThisIndices[i] = MeanParticleNumber * (ThreadNumber - 1) + i;
-		}
-	}
+	int ThisParticle = ThisTask;
 
 	/* now start setting units */
 #pragma omp critical
@@ -85,20 +53,22 @@ void set_units()
 		HalfBoxSizeInInternalUnits = BoxSizeInInternalUnits / 2.0;
 	}
 
-	for (int i = 0; i < ThisNumber; i++)
+	while (ThisParticle < NTotalParticle)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			P[ThisIndices[i]].Pos[j] *= LENGTH_UNIT_IN_MPC / MeshSizeInPhysicalUnits;
-			if (P[ThisIndices[i]].Pos[j] >= BoxSizeInInternalUnits)
+			P[ThisParticle].Pos[j] *= LENGTH_UNIT_IN_MPC / MeshSizeInPhysicalUnits;
+			if (P[ThisParticle].Pos[j] >= BoxSizeInInternalUnits)
 			{
-				P[ThisIndices[i]].Pos[j] -= BoxSizeInInternalUnits;
+				P[ThisParticle].Pos[j] -= BoxSizeInInternalUnits;
 			}
-			else if (P[ThisIndices[i]].Pos[j] < 0.0)
+			else if (P[ThisParticle].Pos[j] < 0.0)
 			{
-				P[ThisIndices[i]].Pos[j] += BoxSizeInInternalUnits;
+				P[ThisParticle].Pos[j] += BoxSizeInInternalUnits;
 			}
 		}
+
+		ThisParticle += ThreadNumber;
 	}
 }
 
