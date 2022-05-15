@@ -52,7 +52,7 @@ void read_param()
 	id[nt++] = STRING;
 
 	strcpy(tag[nt], "folding_number");
-	addr[nt] = All.FoldingNumber;
+	addr[nt] = &All.FoldingNumber;
 	id[nt++] = INT;
 
 	while (!feof(filename))
