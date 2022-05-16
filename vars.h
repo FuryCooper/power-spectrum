@@ -21,11 +21,12 @@ struct GadgetHeader
 	double Redshift;
 	int FlagSfr;
 	int FlagFeedback;
-	int NPartTotal;
+	int NPartTotal[6];
+	int FlagCooling;
 	int NumFiles;
 	double BoxSize;
-	int FlagCooling;
 	double Omega0;
+	double OmegaLambda;
 	double HubbleParam;
 	char Fill[256 - 6 * 4 - 6 * 8 - 2 * 8 - 2 * 4 - 6 * 4 - 2 * 4 - 4 * 8]; //fills to 256 Bytes
 };

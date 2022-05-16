@@ -43,6 +43,7 @@ void set_units()
 {
 	int ThisTask = omp_get_thread_num();
 	int ThisParticle = ThisTask;
+	float tmp;
 
 	/* now start setting units */
 #pragma omp critical
@@ -57,7 +58,13 @@ void set_units()
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			P[ThisParticle].Pos[j] *= LENGTH_UNIT_IN_MPC / MeshSizeInPhysicalUnits;
+			//printf("%f %f %f \n", P[ThisParticle].Pos[0], P[ThisParticle].Pos[1], P[ThisParticle].Pos[2]);
+			P[ThisParticle].Pos[j] *= fftwMeshNumber;
+			//printf("%f %f %f \n", P[ThisParticle].Pos[0], P[ThisParticle].Pos[1], P[ThisParticle].Pos[2]);
+			tmp = P[ThisParticle].Pos[j] / Header.BoxSize;
+			//printf("%d\n ", Header.BoxSize);
+			P[ThisParticle].Pos[j] /= Header.BoxSize;
+			//printf("%f %f %f \n", P[ThisParticle].Pos[0], P[ThisParticle].Pos[1], P[ThisParticle].Pos[2]);
 			if (P[ThisParticle].Pos[j] >= BoxSizeInInternalUnits)
 			{
 				P[ThisParticle].Pos[j] -= BoxSizeInInternalUnits;
@@ -66,6 +73,7 @@ void set_units()
 			{
 				P[ThisParticle].Pos[j] += BoxSizeInInternalUnits;
 			}
+			//printf("%f %f %f %d\n\n", P[ThisParticle].Pos[0], P[ThisParticle].Pos[1], P[ThisParticle].Pos[2], ThisParticle);
 		}
 
 		ThisParticle += ThreadNumber;

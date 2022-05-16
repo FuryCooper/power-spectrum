@@ -13,6 +13,7 @@ void powerspectrum()
 	printf("Starting calculating power spectrum...\n");
 	for (int FoldingCount = 0; FoldingCount < All.FoldingNumber; FoldingCount++)
 	{
+		printf("Starting folding...\n");
 		if (FoldingCount)
 		{
 			kMaxThisFolding *= 2;
@@ -21,6 +22,8 @@ void powerspectrum()
 #pragma omp parallel num_threads(ThreadNumber)
 			folding();
 		}
+
+		printf("Folding: done.\n");
 
 		compute_density_field();
 
@@ -61,9 +64,11 @@ void compute_power_spectrum(int FoldingCount)
 	double kFactor1 = M_PI / fftwMeshNumber;
 	double kFactor2 = 2.0 * M_PI / BoxSizeInPhysicalUnits;
 	double Correct;
-
+	
+	printf("starting fft..\n");
 	/* real space to k-space */
-	fftwnd_one(fftwPlan, fftwArray, NULL);
+	fftwnd_one(fftwPlan, fftwArray, fftwArray);
+	printf("fft done.\n");
 
 	/* CIC correction */
 	ArrayIndex = 0;
@@ -167,4 +172,5 @@ void compute_power_spectrum(int FoldingCount)
 			PkValues[ArrayIndex].PkError += pow(fftwArray[i].im, 2.0);
 		}
 	}
+	printf("done\n");
 }
