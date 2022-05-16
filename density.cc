@@ -30,7 +30,7 @@ void compute_density_field()
 	}
 }
 
-void computing(double TotalMassInBox)
+void computing(double &TotalMassInBox)
 {
 	int ThisTask = omp_get_thread_num();
 	int ParticleNumber = ThisTask;

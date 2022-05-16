@@ -140,11 +140,6 @@ void load_snapshot(int rep)
 		fread(&LocalHeader, sizeof(LocalHeader), 1, SnapShotFile);
 		fread(&BlockSize, sizeof(BlockSize), 1, SnapShotFile);
 
-		printf("npart = %d %d %d %d %d %d \n", LocalHeader.NPart[0], LocalHeader.NPart[1], LocalHeader.NPart[2], LocalHeader.NPart[3], LocalHeader.NPart[4], LocalHeader.NPart[5]);
-		printf("mass = %f %f %f %f %f %f \n", LocalHeader.Mass[0], LocalHeader.Mass[1], LocalHeader.Mass[2], LocalHeader.Mass[3], LocalHeader.Mass[4], LocalHeader.Mass[5]);
-		printf("time = %f redshift = %f flagsfr = %d flagfeed = %d \n", LocalHeader.Time, LocalHeader.Redshift, LocalHeader.FlagSfr, LocalHeader.FlagFeedback);
-		printf("nparttotal = %d %d %d %d %d %d \n", LocalHeader.NPartTotal[0], LocalHeader.NPartTotal[1], LocalHeader.NPartTotal[2], LocalHeader.NPartTotal[3], LocalHeader.NPartTotal[4], LocalHeader.NPartTotal[5]);
-		printf("flagcool = %d numfile = %d Boxsize = %f Omega0 = %f Omegala = %f hubble = %f\n", LocalHeader.FlagCooling, LocalHeader.NumFiles, LocalHeader.BoxSize, LocalHeader.Omega0, LocalHeader.OmegaLambda, LocalHeader.HubbleParam);
 		if (rep == 0)
 		{
 			NLocalParticle = 0;
