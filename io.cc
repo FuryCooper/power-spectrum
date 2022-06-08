@@ -15,7 +15,7 @@ void read_param()
 #define INT 3
 #define MAXTAGS 30
 
-	FILE* filename;
+	FILE* InFile;
 	char buf[MAX_FILENAME_LENGTH], buf1[MAX_FILENAME_LENGTH], buf2[MAX_FILENAME_LENGTH], buf3[MAX_FILENAME_LENGTH];
 	int i, j, nt;
 	int id[MAXTAGS];
@@ -23,8 +23,8 @@ void read_param()
 	char* ret, tag[MAXTAGS][50];
 
 	printf("Starting reading parameter file.\n");
-	filename = fopen(param_path, "r");
-	if (filename == NULL)
+	InFile = fopen(param_path, "r");
+	if (InFile == NULL)
 	{
 		printf("Error: Fail to load parameter file %s.\n", param_path);
 		exit(1);
@@ -55,10 +55,10 @@ void read_param()
 	addr[nt] = &All.FoldingNumber;
 	id[nt++] = INT;
 
-	while (!feof(filename))
+	while (!feof(InFile))
 	{
 		buf[0] = 0;
-		ret = fgets(buf, MAX_FILENAME_LENGTH, filename);
+		ret = fgets(buf, MAX_FILENAME_LENGTH, InFile);
 		if (sscanf(buf, "%s%s%s", buf1, buf2, buf3) < 2)
 			continue;
 		if (buf1[0] == '%')
@@ -94,7 +94,7 @@ void read_param()
 			exit(1);
 		}
 	}
-	fclose(filename);
+	fclose(InFile);
 	printf("Done.\n");
 }
 
@@ -267,7 +267,7 @@ void output()
 {
 	printf("Starting outputing results...\n");
 
-	char filename[MAX_FILENAME_LENGTH];
+	char filename[MAX_FILENAME_LENGTH * 3];
 	FILE* OutFile;
 
 	for (int i = 0; i < PkBinNumber; i++)
@@ -277,15 +277,16 @@ void output()
 		PkValues[i].PkError /= PkValues[i].kNumber;
 		PkValues[i].PkError = sqrt(PkValues[i].PkError - PkValues[i].pk * PkValues[i].pk) / sqrt(PkValues[i].kNumber);
 	}
-
+	printf("checkpoint\n");
 	sprintf(filename, "%s%smesh%d.txt", All.output_dir, All.output_root, fftwMeshNumber);
+	printf("%s\n",filename);
 	OutFile = fopen(filename, "w");
+	printf("checkpoint3\n");
 	if (OutFile == NULL)
 	{
 		printf("Error: Fail to open file: %s.\n", filename);
 		exit(1);
 	}
-
 	fprintf(OutFile, "k[h/Mpc] Pk[Mpc^3/h^3] k_number Pk_error\n");
 	for (int i = 0; i < PkBinNumber; i++)
 	{

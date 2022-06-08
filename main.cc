@@ -43,6 +43,8 @@ int main(int argc, char** argv) {
 	
 	output();
 
+	free_memory();
+
 	FinishTime = clock();
 	printf("CLOCKS_PER_SEC = %ld\n", CLOCKS_PER_SEC);
 	printf("Duration = %f\n", (double)((FinishTime - StartTime) / CLOCKS_PER_SEC));

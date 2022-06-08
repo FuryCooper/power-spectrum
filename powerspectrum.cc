@@ -60,7 +60,7 @@ void compute_power_spectrum(int FoldingCount)
 	int HalfMeshNumber = fftwMeshNumber / 3;
 	int kx, ky, kz, kSquare;
 	int ArrayIndex;
-	int cx, cy, cz;
+	double cx, cy, cz;
 	double kFactor1 = M_PI / fftwMeshNumber;
 	double kFactor2 = 2.0 * M_PI / BoxSizeInPhysicalUnits;
 	double Correct;
@@ -129,7 +129,6 @@ void compute_power_spectrum(int FoldingCount)
 						cz = kz * kFactor1;
 						cz = sin(cz) / cz;
 					}
-
 					Correct = pow(cx * cy * cz, 2);
 					fftwArray[ArrayIndex].re /= Correct;
 					fftwArray[ArrayIndex].im /= Correct;
