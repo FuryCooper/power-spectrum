@@ -12,6 +12,7 @@
 #include "initialize.h"
 #include "powerspectrum.h"
 #include "io.h"
+#include "memory.h"
 
 /*Now we are going to read the snapshot. it might be several files of snapshot.
 */
