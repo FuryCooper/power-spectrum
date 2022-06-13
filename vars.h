@@ -57,8 +57,10 @@ struct Parameter
 	char input_dir[MAX_FILENAME_LENGTH];
 	char output_dir[MAX_FILENAME_LENGTH];
 	char output_root[MAX_FILENAME_LENGTH];
-	char nu_txt[MAX_FILENAME_LENGTH];
+#ifdef NEUTRINO
+	char nu_txt_dir[MAX_FILENAME_LENGTH];
 	double fnu;
+#endif // NEUTRINO
 	int FoldingNumber;
 };
 
@@ -74,6 +76,10 @@ extern int* ParticleNo;
 extern int NTotalParticle;
 extern int TotalMeshNumber;
 extern int PkBinNumber, PkBinNumberLinear, PkBinNumberLog;
+#ifdef NEUTRINO
+extern int rd_size;
+extern double* rd_array_k, * rd_array_pk;
+#endif // NEUTRINO
 extern int kMin, kMax, kMinThisFolding, kMaxThisFolding;
 extern double DeltaLinearK, DeltaLogK;
 extern fftw_complex* fftwArray;

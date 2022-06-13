@@ -49,6 +49,7 @@ void free_memory()
 {
 	printf("Starting freeing memory...\n");
 
+	free(ParticleNo);
 	free(fftwArray);
 	free(P);
 	free(PkValues);

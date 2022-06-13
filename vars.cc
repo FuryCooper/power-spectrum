@@ -18,6 +18,11 @@ int* ParticleNo;
 int NTotalParticle;
 int TotalMeshNumber;
 int PkBinNumber, PkBinNumberLinear, PkBinNumberLog;
+#ifdef NEUTRINO
+int rd_size;
+double* rd_array_k, * rd_array_pk;
+#endif // NEUTRINO
+
 
 /* fourier transformation */
 int kMin, kMax, kMinThisFolding, kMaxThisFolding;

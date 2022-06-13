@@ -29,10 +29,13 @@ void initialize()
 			allocate_memory_for_particles();
 		}
 	}
-	free(ParticleNo);
 
 #pragma omp parallel num_threads(ThreadNumber)
 	set_units();
+
+#ifdef NEUTRINO
+	load_neutrino_ratio();
+#endif // NEUTRINO
 
 	allocate_memory_for_fftwArray();
 

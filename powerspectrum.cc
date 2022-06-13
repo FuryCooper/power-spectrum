@@ -64,6 +64,7 @@ void compute_power_spectrum(int FoldingCount)
 	double kFactor1 = M_PI / fftwMeshNumber;
 	double kFactor2 = 2.0 * M_PI / BoxSizeInPhysicalUnits;
 	double Correct;
+	double Pk_temp, k_temp;
 	
 	printf("starting fft..\n");
 	/* real space to k-space */
@@ -165,11 +166,37 @@ void compute_power_spectrum(int FoldingCount)
 			{
 				ArrayIndex = PkBinNumberLinear + (log10(fftwArray[i].re) - log10(fftwMeshNumber / 4)) / DeltaLogK;
 			}
-			PkValues[ArrayIndex].k += log10(fftwArray[i].re * kFactor2);
-			PkValues[ArrayIndex].pk += fftwArray[i].im;
 			PkValues[ArrayIndex].kNumber++;
-			PkValues[ArrayIndex].PkError += pow(fftwArray[i].im, 2.0);
+			k_temp = log10(fftwArray[i].re * kFactor2);
+			PkValues[ArrayIndex].k += k_temp;
+			Pk_temp = fftwArray[i].im;
+#ifdef NEUTRINO
+			neutrino_correction(k_temp, Pk_temp);
+#endif // NEUTRINO
+			PkValues[ArrayIndex].pk += Pk_temp;
+			PkValues[ArrayIndex].PkError += pow(Pk_temp, 2.0);
 		}
 	}
 	printf("done\n");
 }
+
+#ifdef NEUTRINO
+void neutrino_correction(double& k_temp, int& Pk_temp)
+{
+	double temp_ratio, temp_k;
+	temp_k = pow(10., k_temp);
+	for (int i = 0; i < rd_size; i++)
+	{
+		if (temp_k >= rd_array_k[i] && temp_k < rd_array_k[i+1])
+		{
+			temp_ratio = (rd_array_pk[i] + rd_array_pk[i + 1]) / 2.0;
+		}
+	}
+
+	if (temp_k > rd_array_k[rd_size])
+	{
+		temp_ratio = 0.;
+	}
+	Pk_temp = pow(sqrt(Pk_temp) * (1. - All.fnu) + sqrt(Pk_temp) * sqrt(temp_ratio) * All.fnu, 2.0);
+}
+#endif // NEUTRINO

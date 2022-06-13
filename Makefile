@@ -1,5 +1,11 @@
+#----------------------------------- optional setting
+OPT += -DNEUTRINO
+
+#----------------------------------- 
 CXX = g++
-CXXFLAGS = -Wall -fopenmp 
+OPTIMIZE = -Wall -fopenmp
+CXXFLAGS = $(OPTIMIZE) $(OPT)
+
 OBJS = initialize.o density.o io.o main.o memory.o vars.o powerspectrum.o 
 INCLS = initialize.h density.h io.h	memory.h powerspectrum.h vars.h
 EXEC = POWERSPEC

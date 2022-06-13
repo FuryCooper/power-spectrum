@@ -55,6 +55,16 @@ void read_param()
 	addr[nt] = &All.FoldingNumber;
 	id[nt++] = INT;
 
+#ifdef NEUTRINO
+	strcpy(tag[nt], "pk_nu_txt");
+	addr[nt] = &All.nu_txt_dir;
+	id[nt++] = STRING;
+
+	strcpy(tag[nt], "f_nu");
+	addr[nt] = &All.fnu;
+	id[nt++] = FLOAT;
+#endif // NEUTRINO
+
 	while (!feof(InFile))
 	{
 		buf[0] = 0;
@@ -97,6 +107,55 @@ void read_param()
 	fclose(InFile);
 	printf("Done.\n");
 }
+
+#ifdef NEUTRINO
+void load_neutrino_ratio()
+{
+	FILE* NuFile;
+	double kkk, ppp;
+
+	rd_size = 0;
+	if (!(NuFile = fopen(All.nu_txt_dir, "r")))
+	{
+		printf("Error: Fail to open file: %s \n", All.nu_txt_dir);
+	}
+	do
+	{
+		if (fscanf(NuFile, "%lg %lg", % kkk, &ppp) == 2)
+		{
+			rd_size++;
+		}
+		else
+		{
+			break;
+		}
+	} while (1);
+	fclose(NuFile);
+
+	rd_array_k = (double*)malloc((rd_size) * sizeof(double));
+	rd_array_pk = (double*)malloc((rd_size) * sizeof(double));
+
+	rd_size = 0;
+	if (!(NuFile = fopen(All.nu_txt_dir, "r")))
+	{
+		printf("Error: Fail to open file: %s \n", All.nu_txt_dir);
+	}
+	do
+	{
+		if (fscanf(NuFile, "%lg %lg", % kkk, &ppp) == 2)
+		{
+			rd_array_k[rd_size] = kkk;
+			rd_array_pk[rd_size] = ppp;
+			rd_size++;
+		}
+		else
+		{
+			break;
+		}
+	} while (1);
+	fclose(NuFile);
+}
+#endif // NEUTRINO
 
 void load_snapshot(int rep)
 {
@@ -277,11 +336,11 @@ void output()
 		PkValues[i].PkError /= PkValues[i].kNumber;
 		PkValues[i].PkError = sqrt(PkValues[i].PkError - PkValues[i].pk * PkValues[i].pk) / sqrt(PkValues[i].kNumber);
 	}
-	printf("checkpoint\n");
+
 	sprintf(filename, "%s%smesh%d.txt", All.output_dir, All.output_root, fftwMeshNumber);
 	printf("%s\n",filename);
 	OutFile = fopen(filename, "w");
-	printf("checkpoint3\n");
+
 	if (OutFile == NULL)
 	{
 		printf("Error: Fail to open file: %s.\n", filename);
